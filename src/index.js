@@ -5,20 +5,13 @@ const cors = require('cors')
 const {
   logErrors,
   errorHandler,
-  boomErrorHandler
+  boomErrorHandler,
+  ormErrorHandler
 } = require('./middlewares/error.handler')
 
 const app = express()
-
 const port = process.env.PORT || 3000
 
-app.get('/', (req, res) => {
-  res.send('Hola mi server en express')
-})
-
-routerApi(app)
-
-//middlewares
 app.use(express.json())
 
 const whitelist = [
@@ -36,8 +29,16 @@ const options = {
 }
 
 app.use(cors(options))
+app.get('/', (req, res) => {
+  res.send('Hola mi server en express')
+})
+
+routerApi(app)
+
+//middlewares
 
 app.use(logErrors)
+app.use(ormErrorHandler)
 app.use(boomErrorHandler)
 app.use(errorHandler)
 

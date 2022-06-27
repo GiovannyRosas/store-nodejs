@@ -1,6 +1,8 @@
 const faker = require('faker')
 const boom = require('@hapi/boom')
 
+const sequelize = require('../lib/sequelize')
+
 class ProductsService {
   constructor() {
     this.products = []
@@ -31,12 +33,10 @@ class ProductsService {
     return newProduct
   }
 
-  find() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.products)
-      }, 5000)
-    })
+  async find() {
+    const query = 'SELECT * from tasks'
+    const [data] = await sequelize.query(query)
+    return data
   }
 
   findOne(id) {

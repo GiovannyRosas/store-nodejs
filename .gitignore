@@ -211,3 +211,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# DATABASES VOLUMES
+
+postgres_data
+mysql_data
