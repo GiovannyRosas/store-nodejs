@@ -40,10 +40,16 @@ router.get(
 router.post(
   '/',
   validatorHandler(createProductSchema, 'body'),
-  async (req, res) => {
-    const body = req.body
-    const createdProduct = await productService.create(body)
-    res.status(201).json(createdProduct)
+  async (req, res, next) => {
+    try {
+      const body = req.body
+      const createdProduct = await productService.create(
+        body
+      )
+      res.status(201).json(createdProduct)
+    } catch (e) {
+      next(e)
+    }
   }
 )
 
